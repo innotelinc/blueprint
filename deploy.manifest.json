@@ -1,0 +1,13 @@
+{
+  "entrypoint": "index.js",
+  "compatibilityDate": "2025-09-23",
+  "modules": [
+    { "name": "index.js", "type": "esm", "path": "./dist/index.js" },
+    { "name": "store.js", "type": "esm", "path": "./dist/store.js" },
+    { "name": "domain.js", "type": "esm", "path": "./dist/domain.js" },
+    { "name": "email.js", "type": "esm", "path": "./dist/email.js" },
+    { "name": "ai.js", "type": "esm", "path": "./dist/ai.js" }
+  ],
+  "assetsDirectory": "./public",
+  "spa": true
+}

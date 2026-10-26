@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blueprint. — Every Step Taken</title>
+<meta name="description" content="Blueprint. takes one company name and walks it to a working company — every step taken: brand, logo, website, domain, Oasis email, social presence, a funded business plan, go-to-market and the incorporation paperwork.">
+<meta name="theme-color" content="#0a0c12">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/app.css">
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brandmark">
+      <!-- Three ascending steps on a plain tile. No grid, no dimensions, no
+           ornament: the mark has to read at 16px and be drawn from memory. -->
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <rect x="0.75" y="0.75" width="30.5" height="30.5" rx="7" fill="#0d1a33" stroke="#33507f" stroke-width="1.5"/>
+        <rect x="7" y="19" width="5.4" height="6" rx="1.2" fill="#d7e6ff"/>
+        <rect x="13.3" y="14.4" width="5.4" height="10.6" rx="1.2" fill="#d7e6ff"/>
+        <rect x="19.6" y="9.8" width="5.4" height="15.2" rx="1.2" fill="#d7e6ff"/>
+      </svg>
+      <span>Blueprint.<small>Every Step Taken</small></span>
+    </div>
+    <div class="topbar-spacer"></div>
+    <div class="status">
+      <span class="dot" id="api-dot"></span>
+      <span id="api-status">checking API…</span>
+    </div>
+    <button class="btn btn-sm btn-primary" id="btn-publish" disabled title="Build the whole package and save the project under the business name">Publish package</button>
+    <button class="btn btn-sm btn-ghost" id="btn-save" disabled>Save project</button>
+    <button class="btn btn-sm btn-ghost" id="btn-restore" hidden>Restore</button>
+  </header>
+
+  <div class="workspace">
+    <aside class="sidebar">
+      <form id="intake" autocomplete="off">
+        <div class="field">
+          <label for="name">Company name</label>
+          <input id="name" name="name" type="text" placeholder="Northwind" value="Northwind" required maxlength="60">
+          <span class="hint">Everything below is derived from this name. Change it and the whole company changes.</span>
+        </div>
+
+        <div class="field">
+          <label for="oneLiner">Purpose <span class="faint">(optional)</span></label>
+          <input id="oneLiner" name="oneLiner" type="text" placeholder="Automates reconciliation for finance teams" maxlength="200">
+        </div>
+
+        <div class="field">
+          <label for="industry">Industry</label>
+          <select id="industry" name="industry"></select>
+        </div>
+
+        <div class="field">
+          <label for="audience">Target audience</label>
+          <select id="audience" name="audience"></select>
+          <span class="hint">Who buys this. Pick the closest group — the copy, channels and pricing follow it.</span>
+        </div>
+
+        <div class="field">
+          <label for="tone">Tone</label>
+          <select id="tone" name="tone"></select>
+        </div>
+
+        <details class="panel" style="padding:12px;margin-bottom:12px">
+          <summary style="cursor:pointer;font-size:13px;color:var(--text-dim)">Founder and company details</summary>
+          <div style="margin-top:12px">
+            <div class="field">
+              <label for="founder">Founder name</label>
+              <input id="founder" name="founder" type="text" placeholder="Ada Lovelace" maxlength="80">
+            </div>
+            <div class="field">
+              <label for="founderEmail">Your email</label>
+              <input id="founderEmail" name="founderEmail" type="email" placeholder="ada@example.com" maxlength="120">
+            </div>
+            <div class="field">
+              <label for="city">City</label>
+              <input id="city" name="city" type="text" placeholder="Austin" maxlength="80">
+            </div>
+            <div class="field">
+              <label for="state">Home state</label>
+              <select id="state" name="state"></select>
+            </div>
+            <div class="field">
+              <label for="cofounders">Co-founders</label>
+              <select id="cofounders" name="cofounders">
+                <option value="0">Just me — no co-founders</option>
+                <option value="1">1 co-founder</option>
+                <option value="2">2 co-founders</option>
+                <option value="3">3 co-founders</option>
+                <option value="4">4 co-founders</option>
+                <option value="5">5 co-founders</option>
+                <option value="6">6 co-founders</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="raising">Raising outside capital?</label>
+              <select id="raising" name="raising">
+                <option value="yes">Yes — VC or angel round planned</option>
+                <option value="no">No — bootstrapping</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="raiseAmount">Amount you plan to raise</label>
+              <input id="raiseAmount" name="raiseAmount" type="number" min="0" max="50000000" step="25000" placeholder="Let the plan size it">
+              <span class="hint">Leave blank and the business plan sizes the round from its own model.</span>
+            </div>
+            <div class="field">
+              <label for="entities">Entity preference</label>
+              <select id="entity" name="entity">
+                <option value="auto">Let Blueprint recommend</option>
+                <option value="de-c-corp">Delaware C-Corp</option>
+                <option value="de-llc">Delaware LLC</option>
+                <option value="home-llc">Home-state LLC</option>
+                <option value="home-corp">Home-state corporation</option>
+                <option value="sole-prop">No entity yet</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="mailProvider">Email provider</label>
+              <select id="mailProvider" name="mailProvider"></select>
+              <span class="hint" id="mailProvider-hint">Hosted by Innotel.</span>
+            </div>
+          </div>
+        </details>
+
+        <button class="btn btn-primary btn-wide" type="submit" id="btn-generate">Generate company</button>
+        <p class="small faint" style="margin-top:10px">Runs entirely in your browser. Nothing is uploaded unless you save the project.</p>
+      </form>
+    </aside>
+
+    <main class="content" id="main">
+      <section id="view"></section>
+    </main>
+  </div>
+
+  <footer class="footerbar">
+    <span id="footer-status">Ready.</span>
+    <span class="topbar-spacer"></span>
+    <span class="faint">Engine <span id="engine-version">—</span></span>
+    <span class="faint">No dependencies · runs offline · nothing leaves your browser unless you ask</span>
+  </footer>
+</div>
+
+<div id="form-modal" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="form-modal-title">
+  <div class="modal-panel">
+    <div class="modal-head">
+      <div class="modal-titles">
+        <strong id="form-modal-title">Printable form</strong>
+        <span class="small mono" id="form-modal-path"></span>
+      </div>
+      <div class="row" style="flex:none;gap:8px">
+        <button class="btn btn-sm btn-primary" type="button" id="form-modal-print">Print</button>
+        <button class="btn btn-sm" type="button" id="form-modal-tab">Open in new tab</button>
+        <button class="btn btn-sm btn-ghost" type="button" id="form-modal-close">Close</button>
+      </div>
+    </div>
+    <iframe id="form-modal-frame" title="Printable government form"></iframe>
+    <div class="modal-foot small faint" id="form-modal-hint">Print at 100% scale on US Letter — do not use &ldquo;fit to page&rdquo;. If your print preview shows the app rather than the form, use &ldquo;Open in new tab&rdquo;.</div>
+  </div>
+</div>
+
+<div id="projects-modal" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="projects-modal-title">
+  <div class="modal-panel">
+    <div class="modal-head">
+      <div class="modal-titles">
+        <strong id="projects-modal-title">Saved projects</strong>
+        <span class="small faint">Open one to continue where you left off, or remove it and the data its website collected.</span>
+      </div>
+      <div class="row" style="flex:none;gap:8px">
+        <button class="btn btn-sm btn-ghost" type="button" id="projects-modal-close">Close</button>
+      </div>
+    </div>
+    <div id="projects-list" class="projects-list"></div>
+  </div>
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+<script type="module" src="/app.js"></script>
+</body>
+</html>

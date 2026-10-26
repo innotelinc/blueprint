@@ -1,0 +1,27 @@
+{
+  "siteId": "f8e4d54b-a70a-42fc-8d00-2061df6e7e80",
+  "name": "DayZero",
+  "environments": {
+    "production": {
+      "url": "https://site-98d2731496d341c7b2552c5419949ddc.freebuff.page",
+      "worker": "site-98d2731496d341c7b2552c5419949ddc",
+      "d1": { "binding": "DB", "resourceId": "6d64f4a5-8325-44a4-85a1-6982348fe44e" }
+    },
+    "preview": {
+      "url": "https://site-d4f81ff87ada4329b3560f393e126af0.freebuff.page",
+      "worker": "site-d4f81ff87ada4329b3560f393e126af0",
+      "deployed": false
+    }
+  },
+  "manifest": "deploy.manifest.json",
+  "compatibilityDate": "2025-09-23",
+  "howToRedeploy": [
+    "mkdir -p dist && cp worker/{index,store,domain,email,ai}.js dist/",
+    "deploy using deploy.manifest.json (5 esm modules + ./public assets, spa: true)"
+  ],
+  "notes": [
+    "The D1 schema is created by worker/store.js on first use, so a fresh database needs no migration step.",
+    "worker/schema.sql remains the canonical copy for anyone applying it by hand with `wrangler d1 execute`.",
+    "No secrets are configured: email is in capture mode and the optional AI rewrite is off."
+  ]
+}

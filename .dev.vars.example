@@ -1,0 +1,59 @@
+# Copy to .dev.vars (git-ignored) and fill in only what you want to enable.
+# Everything is optional: with none of these set, Blueprint still generates the
+# whole company, still checks domains, still plans every mailbox, and stores form
+# submissions — it just records outgoing email in capture mode, leaves the
+# positioning statement to the deterministic engine, and returns the Oasis
+# provisioning plan without creating anything.
+
+# --- Positioning (the one thing a model writes) ------------------------------
+# Any OpenAI-compatible chat-completions endpoint. AI_BASE_URL must stop at /v1
+# — the worker appends /chat/completions itself.
+#
+# In this estate that endpoint is the OmniRoute gateway, and the key is not
+# written here: it is a `vault://` reference the dev server resolves at startup
+# (see resolveVaultRefs in scripts/dev-server.mjs), so a local checkout points at
+# the estate's Vault instead of holding a copy of the secret.
+# AI_BASE_URL=http://192.168.1.71:20128/v1
+# AI_MODEL=auto/best-chat
+# AI_API_KEY=vault://cerulean/olympus#OMNIROUTE_API_KEY
+# VAULT_ADDR=http://192.168.1.71:8200
+# VAULT_TOKEN_FILE=.data/vault/olympus.token
+
+# --- Oasis mail (Innotel) ----------------------------------------------------
+# Oasis is the default mail provider and the only one Blueprint can provision.
+# Mailboxes live on Innotel's Stalwart server; two APIs do the work:
+#
+#   CERULEAN_*     publishes the mail domain and its MX/SPF/DKIM/DMARC records
+#                  through Cerulean's service bridge (Bearer service key, scopes
+#                  `domains` and `dns`).
+#   OASIS_*        creates the tenant, the mail domain and the mailboxes on
+#                  Stalwart. Its configuration API is JMAP, not REST, so these
+#                  are JMAP calls made with an administrative principal.
+#
+# Until BOTH halves are set, /api/mail/provision answers with the plan and
+# creates nothing, so these are safe to leave unset.
+#
+# The vault:// paths below are placeholders: they only resolve once the values
+# actually exist in Vault at that path. Write the tokens there first, then point
+# these at them — or set the two literals directly for a throwaway local run.
+# CERULEAN_API_URL=https://cerulean.innotel.us
+# CERULEAN_API_TOKEN=vault://cerulean/oasis#CERULEAN_API_TOKEN
+# OASIS_JMAP_URL=https://mail.innotel.us/jmap/
+# OASIS_ADMIN_TOKEN=vault://cerulean/oasis#OASIS_ADMIN_TOKEN
+# OASIS_JMAP_ACCOUNT_ID=
+# Optional: total storage to grant the new tenant, in GB.
+# OASIS_TENANT_QUOTA_GB=25
+
+# --- Optional: outbound email ------------------------------------------------
+# Blueprint's own mail (double opt-in confirmations, enquiry notifications).
+# This is separate from the mailboxes it creates for a customer.
+# EMAIL_PROVIDER: resend | postmark | plunk  (pair it with the matching key)
+# EMAIL_PROVIDER=resend
+# EMAIL_FROM="Blueprint <hello@your-domain.com>"
+# RESEND_API_KEY=
+# POSTMARK_SERVER_TOKEN=
+# PLUNK_API_KEY=
+
+# --- Optional: where new enquiries are announced -----------------------------
+# Must be an address you control — never one supplied by a public form.
+# LEAD_NOTIFY_TO=

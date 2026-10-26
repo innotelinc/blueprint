@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-label="Blueprint.">
+  <rect x="0.75" y="0.75" width="30.5" height="30.5" rx="7" fill="#0d1a33" stroke="#33507f" stroke-width="1.5"/>
+  <!-- Three ascending steps, rising left to right. -->
+  <rect x="7" y="19" width="5.4" height="6" rx="1.2" fill="#d7e6ff"/>
+  <rect x="13.3" y="14.4" width="5.4" height="10.6" rx="1.2" fill="#d7e6ff"/>
+  <rect x="19.6" y="9.8" width="5.4" height="15.2" rx="1.2" fill="#d7e6ff"/>
+</svg>
